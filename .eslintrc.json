@@ -25,6 +25,7 @@
     "react/jsx-props-no-spreading": "off",
     "react/prop-types": "off",
     "react-hooks/rules-of-hooks": "error",
+    "no-unused-expressions": "off",
     "no-underscore-dangle": "off",
     "camelcase": "off",
     "react-hooks/exhaustive-deps": "warn",

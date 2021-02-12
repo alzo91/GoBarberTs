@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Form } from '@unform/web';
+import { FormHandles } from '@unform/core';
 import { FiArrowLeft, FiUser, FiMail, FiLock } from 'react-icons/fi';
+import * as Yup from 'yup';
 import { Container, Content, Background } from './styles';
 import Logo from '../../assets/logo.svg';
 import Colors from '../../Configs/Colors';
@@ -9,9 +11,24 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 
 const SingUp: React.FC = () => {
-  function handleSubmit(data: void) {
-    console.log(data);
-  }
+  const formRef = useRef<FormHandles>(null);
+
+  const handleSubmit = useCallback(async (data: object) => {
+    try {
+      const schema = Yup.object().shape({
+        name: Yup.string().required('Nome é obrigatório'),
+        email: Yup.string()
+          .required('E-mail é obrigatório')
+          .email('Digite um e-mail válido'),
+        password: Yup.string().min(6, 'Senha no minimo de 6 caracteres'),
+      });
+      await schema.validate(data, { abortEarly: false });
+      // formRef.current?.setErrors({ name: 'nome obrigatorio' });
+    } catch (err) {
+      console.log(JSON.stringify(err));
+      formRef.current?.setErrors({ name: 'nome obrigatorio' });
+    }
+  }, []);
   return (
     <Container>
       <Background />
@@ -19,7 +36,8 @@ const SingUp: React.FC = () => {
         <img src={Logo} alt="GoBarber" />
 
         <Form
-          initialData={{ name: '', email: '', password: '' }}
+          ref={formRef}
+          // initialData={{ name: '', email: '', password: '' }}
           onSubmit={handleSubmit}
         >
           <h1>Faça seu Cadastro</h1>
