@@ -20,7 +20,9 @@
   "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
   "rules": {
     "prettier/prettier": "error",
-    "no-unused-vars": "warn",
+    // "no-unused-vars": "warn",
+    "no-unused-vars": ["error", { "args": "none", "caughtErrors": "none" }],
+    "no-console": "off",
     "react/jsx-one-expression-per-line": "off",
     "react/jsx-props-no-spreading": "off",
     "react/prop-types": "off",

@@ -1,9 +1,11 @@
 import styled, { css } from 'styled-components';
 import Colors from '../../Configs/Colors';
+import Tooltip from '../Tooltip';
 
 interface ContainerProps {
   isFocused: boolean;
   isFilled: boolean;
+  isErrored: boolean;
 }
 export const Container = styled.div<ContainerProps>`
   display: flex;
@@ -18,6 +20,13 @@ export const Container = styled.div<ContainerProps>`
   color: ${Colors.grayHard};
 
   ${props =>
+    props.isErrored &&
+    css`
+      color: ${Colors.error};
+      border-color: ${Colors.error};
+    `}
+
+  ${props =>
     props.isFocused &&
     css`
       color: ${Colors.button};
@@ -29,6 +38,8 @@ export const Container = styled.div<ContainerProps>`
     css`
       color: ${Colors.button};
     `}
+
+
 
   input {
     background: transparent;
@@ -48,3 +59,26 @@ export const Container = styled.div<ContainerProps>`
 `;
 
 export const InputText = styled.input``;
+
+// export const Error = styled.div`
+//   height: 20px;
+//   margin-left: 16px;
+//   svg {
+//     margin-right: 0;
+//   }
+// `;
+
+export const Error = styled(Tooltip)`
+  height: 20px;
+  margin-left: 16px;
+  svg {
+    margin-right: 0;
+  }
+  span {
+    background: ${Colors.error};
+    color: ${Colors.white};
+    &::before {
+      border-color: ${Colors.error} transparent;
+    }
+  }
+`;

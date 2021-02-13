@@ -9,12 +9,14 @@ import Logo from '../../assets/logo.svg';
 import Colors from '../../Configs/Colors';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import getValidationErrors from '../../utils/getValidationErrors';
 
 const SingUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   const handleSubmit = useCallback(async (data: object) => {
     try {
+      formRef.current?.setErrors({});
       const schema = Yup.object().shape({
         name: Yup.string().required('Nome é obrigatório'),
         email: Yup.string()
@@ -23,10 +25,11 @@ const SingUp: React.FC = () => {
         password: Yup.string().min(6, 'Senha no minimo de 6 caracteres'),
       });
       await schema.validate(data, { abortEarly: false });
-      // formRef.current?.setErrors({ name: 'nome obrigatorio' });
     } catch (err) {
-      console.log(JSON.stringify(err));
-      formRef.current?.setErrors({ name: 'nome obrigatorio' });
+      // console.log(JSON.stringify(err));
+      // formRef.current?.setErrors({ name: 'nome obrigatorio' });
+      const errors = getValidationErrors(err);
+      formRef.current?.setErrors(errors);
     }
   }, []);
   return (

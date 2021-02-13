@@ -7,6 +7,7 @@ const Colors = {
   blackMedium: '#28262E',
   background: '#312E38',
   inputs: '#232129',
+  error: '#c53030',
 };
 
 export default Colors;
