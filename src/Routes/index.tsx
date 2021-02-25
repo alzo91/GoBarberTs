@@ -1,6 +1,6 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-
+import { Switch } from 'react-router-dom';
+import Route from './Route';
 import SingIn from '../pages/SingIn';
 import Dashboard from '../pages/Dashboard';
 import Profile from '../pages/Profile';
@@ -11,10 +11,11 @@ const Routes: React.FC = () => {
   return (
     <Switch>
       <Route exact path="/" component={SingIn} />
-      <Route exact path="/dashboard/:name" component={Dashboard} />
-      <Route exact path="/profile/:id" component={Profile} />
-      <Route exact path="/singup" component={Singup} />
-      <Route exact path="/forgot" component={Forgot} />
+      <Route path="/dashboard" component={Dashboard} isPrivate />
+      <Route path="/profile/:id" component={Profile} isPrivate />
+      <Route path="/singup" component={Singup} />
+      <Route path="/forgot" component={Forgot} />
+      <Route path="*" component={() => <h1>404 - Page not found</h1>} />
     </Switch>
   );
 };
